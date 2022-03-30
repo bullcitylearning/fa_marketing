@@ -21,6 +21,7 @@
                         mountain: '#595959',
                         persian: '#CC3333',
                         fog: '#ECECE',
+                        lizard: '#CCCC33',
                     }
                 },
                 fontFamily: {
@@ -47,6 +48,49 @@
                     setTimeout(() => {
                         this.mounted = true;
                     }, 500);
+                },
+
+                email: '',
+                subscribeStart: false,
+                subscribeSuccess: false,
+                subscribeError: null,
+                subscribeBtnText: 'Subscribe',
+
+                subscribe() {
+                    this.subscribeStart = true;
+                    this.subscribeSuccess = false;
+                    this.subscribeError = null;
+                    this.subscribeBtnText = 'Subscribing...';
+
+                    const guid = '7a681b70-b67c-496b-9d3a-53d2add105e7';
+                    const fields = [
+                        {
+                            name: 'email',
+                            value: this.email
+                        }
+                    ];
+
+                    fetch('https://api.hsforms.com/submissions/v3/integration/submit/390615/' + guid, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({fields}),
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.status && data.status == 'error') throw data;
+                            this.subscribeStart = false;
+                            this.subscribeSuccess = true;
+                            this.subscribeBtnText = 'Subscribed';
+                            console.log('Success:', data);
+                        })
+                        .catch((error) => {
+                            this.subscribeStart = false;
+                            this.subscribeError = error;
+                            this.subscribeBtnText = 'Retry';
+                            console.error('Error:', error);
+                        });
                 }
             }))
         })
@@ -83,27 +127,44 @@
         </figure>
     </div>
 
-    <p class="text-white/90 text-2xl lg:text-3xl font-body animate__animated animate__fadeIn animate__delay-2s">
+    <p class="text-white/90 text-xl md:text-2xl lg:text-3xl font-body animate__animated animate__fadeIn animate__delay-2s animate__faster">
         Academy Builder is the most intuitive, flexible and quickest way <br class="hidden lg:block">
         to build, control and host corporate training programs.
     </p>
 
-    <form action="#" class="space-y-3 animate__animated animate__fadeIn animate__delay-3s">
-        <p class="text-white text-2xl font-body">
-            Coming soon! Sign up to be notified and to be invited to our Beta Launch! &nbsp;<span
-                class="text-2xl lg:text-3xl">🙌</span>
+    <form
+            @submit.prevent="subscribe"
+            class="space-y-3 animate__animated animate__fadeIn animate__delay-2s animate__fast"
+    >
+        <p class="text-white text-xl lg:text-2xl font-body">
+            Coming soon! Sign up to be notified and to be invited to our Beta Launch!
+            &nbsp;<span class="text-2xl lg:text-3xl inline-block"
+                        :class="{'animate__animated animate__flash animate__repeat-3' : subscribeSuccess}">🙌</span>
         </p>
-        <div class="flex space-x-5 w-full lg:w-3/5 font-body">
+        <div class="flex space-x-3 lg:space-x-5 w-full lg:w-3/5 font-body">
             <input
+                    x-model="email"
                     type="email"
-                    class="text-2xl flex-1 p-2 px-3 focus:outline-none placeholder:text-black bg-gradient-to-b from-[#f6f6f6] to-[#b6b6b6] shadow-sm"
+                    class="md:text-xl lg:text-2xl w-full p-2 px-3 focus:outline-none placeholder:text-black bg-gradient-to-b from-[#f6f6f6] to-[#b6b6b6] shadow-sm"
                     placeholder="email address*"
                     required
+                    :disabled="subscribeStart || subscribeSuccess"
             />
-            <button class="p-3 pr-12 bg-pacific hover:bg-bayou transition text-white uppercase text-xl tracking-wide shadow-sm">
+            <button
+                    class="p-3 pr-8 lg:pr-12 bg-pacific hover:bg-bayou transition text-white uppercase md:text-xl shadow-sm disabled:bg-bayou"
+                    :disabled="subscribeStart || subscribeSuccess"
+                    x-text="subscribeBtnText"
+            >
                 Subscribe
             </button>
         </div>
+        <small
+                x-transition
+                x-show="subscribeError && subscribeError.message"
+                x-text="subscribeError && subscribeError.message"
+                class="bg-persian text-white font-body tracking-wide"
+        >
+        </small>
     </form>
 </div>
 </body>
