@@ -1,0 +1,110 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Roboto&display=swap"
+          rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        cinnabar: '#FF5047',
+                        pacific: '#00BCD1',
+                        bayou: '#007E8F',
+                        black: '#212121',
+                        mountain: '#595959',
+                        persian: '#CC3333',
+                        fog: '#ECECE',
+                    }
+                },
+                fontFamily: {
+                    'sans': 'Archivo, Helvetica, Arial, sans-serif',
+                    'body': 'Roboto, Helvetica, Arial, sans-serif',
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            [x-cloak] {
+                display: none !important;
+            }
+        }
+    </style>
+    <script src="//unpkg.com/alpinejs" defer></script>
+    <script>
+        document.addEventListener('alpine:init', () => {
+            Alpine.data('page', () => ({
+                mounted: false,
+
+                init() {
+                    setTimeout(() => {
+                        this.mounted = true;
+                    }, 500);
+                }
+            }))
+        })
+    </script>
+</head>
+<body x-data="page" x-cloak class="relative bg-mountain">
+<div
+        :style="{maxHeight: mounted ? '100vh' : 0}"
+        class="fixed inset-0 bg-persian transition-all duration-[600ms] ease-[cubic-bezier(.075,.82,.165,1)]"
+></div>
+<div
+        :style="{maxHeight: mounted ? '100vh' : 0}"
+        class="fixed inset-0 bg-cinnabar transition-all duration-[900ms] ease-[cubic-bezier(.075,.82,.165,1)]"
+></div>
+<div
+        :class="mounted ? 'opacity-100' : 'opacity-0'"
+        class="container mx-auto p-5 lg:py-3 space-y-20 relative transition-all delay-100 duration-[900ms] ease-[cubic-bezier(.075,.82,.165,1)]"
+>
+    <div class="flex flex-col lg:flex-row lg:items-end">
+        <header class="lg:w-3/5">
+            <h1 class="font-medium text-white text-4xl lg:text-5xl xl:text-6xl leading-normal xl:leading-snug">
+                Activate your vision.
+            </h1>
+            <h2 class="font-medium text-white text-4xl lg:text-5xl xl:text-6xl leading-normal xl:leading-snug">
+                Train your team, your way.
+            </h2>
+        </header>
+        <figure class="w-4/6 lg:w-2/5 self-center">
+            <img
+                    src="./assets/img/academybuilder-logo-badge-3d-red.png"
+                    class="w-full translate-y-5 lg:translate-y-8"
+                    alt="ACADEMY BUILDER"
+            />
+        </figure>
+    </div>
+
+    <p class="text-white/90 text-2xl lg:text-3xl font-body animate__animated animate__fadeIn animate__delay-2s">
+        Academy Builder is the most intuitive, flexible and quickest way <br class="hidden lg:block">
+        to build, control and host corporate training programs.
+    </p>
+
+    <form action="#" class="space-y-3 animate__animated animate__fadeIn animate__delay-3s">
+        <p class="text-white text-2xl font-body">
+            Coming soon! Sign up to be notified and to be invited to our Beta Launch! &nbsp;<span
+                class="text-2xl lg:text-3xl">🙌</span>
+        </p>
+        <div class="flex space-x-5 w-full lg:w-3/5 font-body">
+            <input
+                    type="email"
+                    class="text-2xl flex-1 p-2 px-3 focus:outline-none placeholder:text-black bg-gradient-to-b from-[#f6f6f6] to-[#b6b6b6] shadow-sm"
+                    placeholder="email address*"
+                    required
+            />
+            <button class="p-3 pr-12 bg-pacific hover:bg-bayou transition text-white uppercase text-xl tracking-wide shadow-sm">
+                Subscribe
+            </button>
+        </div>
+    </form>
+</div>
+</body>
+</html>
