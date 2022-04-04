@@ -95,6 +95,15 @@
             }))
         })
     </script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-T18Y0MJESJ"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-T18Y0MJESJ');
+    </script>
 </head>
 <body x-data="page" x-cloak class="relative bg-mountain">
 <div
@@ -107,7 +116,7 @@
 ></div>
 <div
         :class="mounted ? 'opacity-100' : 'opacity-0'"
-        class="container mx-auto p-5 lg:py-3 space-y-20 relative transition-all delay-100 duration-[900ms] ease-[cubic-bezier(.075,.82,.165,1)]"
+        class="container mx-auto p-5 lg:py-3 space-y-10 lg:space-y-20 relative transition-all delay-100 duration-[900ms] ease-[cubic-bezier(.075,.82,.165,1)]"
 >
     <div class="flex flex-col lg:flex-row lg:items-end">
         <header class="lg:w-3/5">
@@ -166,6 +175,9 @@
         >
         </small>
     </form>
+    <a href="privacy.html" class="text-white/90 text-sm font-body underline block">
+        Privacy Policy
+    </a>
 </div>
 </body>
 </html>
